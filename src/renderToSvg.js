@@ -45,7 +45,7 @@ const render = (points, name) => {
             key: "c",
             cx: point.x * SCALE,
             cy: point.y * SCALE,
-            r: 7 * SCALE / 10,
+            r: 2 * SCALE / 10,
             fill: point.border
               ? "#ff00ff"
               : blendColors(
@@ -66,19 +66,19 @@ const render = (points, name) => {
                 stroke: "#666",
                 strokeWidth: 0.2
               })
-            )
-          // ce(
-          //   "text",
-          //   {
-          //     x: point.x * SCALE,
-          //     y: point.y * SCALE,
-          //     style: {
-          //       fontSize: "8px"
-          //     }
-          //   },
-          //   // [].concat(...point.forceHistory).length
-          //   point.height.toFixed(0)
-          // )
+            ),
+          ce(
+            "text",
+            {
+              x: point.x * SCALE,
+              y: point.y * SCALE,
+              style: {
+                fontSize: "8px"
+              }
+            },
+            // [].concat(...point.forceHistory).length
+            point.height.toFixed(0)
+          )
         ])
       )
     )

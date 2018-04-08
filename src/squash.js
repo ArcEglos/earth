@@ -22,8 +22,9 @@ const squash = mesh => {
     );
     const netStrength = getLength(netForce);
 
-    // // calculate how much of the force is going in which direction
-    const up = Math.log(netStrength + 1); // * (0.05 + Math.random() * 0.1);
+    // calculate how much of the force is going in which direction
+    const up = Math.log(netStrength + 1);
+    newMesh[meshIndex].height += up;
 
     // generate the forces the point exerts on its links
     const forwardForces = point.links
@@ -46,15 +47,13 @@ const squash = mesh => {
           0
         );
 
-        if (netForwardStrength > 0.01) {
+        if (netForwardStrength > 0.001) {
           newMesh[pointIndex].forces.push({
             strength: netForwardStrength * 0.5,
             direction: direction
           });
         }
       });
-
-    newMesh[meshIndex].height += up;
   });
 
   if (newMesh.find(point => point.forces.length > 0) != null) {
