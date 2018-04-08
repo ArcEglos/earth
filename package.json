@@ -1,0 +1,19 @@
+{
+  "name": "earth",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Florian Scholz",
+  "license": "MIT",
+  "dependencies": {
+    "delaunator": "^2.0.0",
+    "mathjs": "^4.0.1",
+    "napajs": "^0.2.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1"
+  }
+}
