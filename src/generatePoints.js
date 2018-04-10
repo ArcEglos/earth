@@ -1,11 +1,10 @@
-const { INPUT_FORCE, AREA } = require("./constants");
-const { getLength, getUnit, crossProduct, aToB } = require("./vector");
+const { getLength, getUnit, crossProduct, aToB } = require('./vector');
 
 const getBoundingBox = points => ({
   x1: Math.min(...points.map(corner => corner.x)),
   x2: Math.max(...points.map(corner => corner.x)),
   y1: Math.min(...points.map(corner => corner.y)),
-  y2: Math.max(...points.map(corner => corner.y))
+  y2: Math.max(...points.map(corner => corner.y)),
 });
 
 const getSurfaceArea = points =>
@@ -40,9 +39,9 @@ const hasIntersection = (line1, line2) => {
   return false;
 };
 
-const generatePoints = () => {
-  let sides = AREA.map((corner, index) => {
-    const nextCorner = AREA[index + 1] || AREA[0];
+const generatePoints = polygon => {
+  let sides = polygon.map((corner, index) => {
+    const nextCorner = polygon[index + 1] || polygon[0];
     return aToB(corner, nextCorner);
   });
 
@@ -55,8 +54,8 @@ const generatePoints = () => {
       const distance = sideLength / numPoints;
 
       return [...new Array(numPoints)].map((_, index) => ({
-        x: AREA[sideIndex].x + index * distance * sideDirection.x,
-        y: AREA[sideIndex].y + index * distance * sideDirection.y,
+        x: polygon[sideIndex].x + index * distance * sideDirection.x,
+        y: polygon[sideIndex].y + index * distance * sideDirection.y,
         height: 0,
         links: [],
         forces:
@@ -67,23 +66,23 @@ const generatePoints = () => {
                   strength: Math.random() * sideLength,
                   direction: {
                     x: -sideDirection.y,
-                    y: sideDirection.x
-                  }
-                }
+                    y: sideDirection.x,
+                  },
+                },
               ],
         forceHistory: [],
-        border: true
+        border: true,
       }));
     })
   );
 
-  const areaBoundingBox = getBoundingBox(AREA);
+  const areaBoundingBox = getBoundingBox(polygon);
 
   let points = [];
-  const wantedPoints = getSurfaceArea(AREA);
+  const wantedPoints = Math.abs(getSurfaceArea(polygon));
   const rayStart = {
     x: areaBoundingBox.x1 - 2,
-    y: areaBoundingBox.y1 - 2
+    y: areaBoundingBox.y1 - 2,
   };
 
   while (points.length < wantedPoints) {
@@ -97,12 +96,12 @@ const generatePoints = () => {
       height: Math.random() / 100,
       links: [],
       forceHistory: [],
-      forces: []
+      forces: [],
     };
 
     const ray = {
       root: rayStart,
-      line: aToB(rayStart, candidate)
+      line: aToB(rayStart, candidate),
     };
     const numHits = sides.reduce((memo, side, sideIndex) => {
       // console.log(ray, {
@@ -111,8 +110,8 @@ const generatePoints = () => {
       // });
       if (
         hasIntersection(ray, {
-          root: AREA[sideIndex],
-          line: side
+          root: polygon[sideIndex],
+          line: side,
         })
       ) {
         return memo + 1;
@@ -130,5 +129,5 @@ const generatePoints = () => {
 
 module.exports = {
   getBoundingBox,
-  generatePoints
+  generatePoints,
 };

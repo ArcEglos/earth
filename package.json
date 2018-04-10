@@ -10,6 +10,7 @@
   "author": "Florian Scholz",
   "license": "MIT",
   "dependencies": {
+    "d3-voronoi": "^1.1.2",
     "delaunator": "^2.0.0",
     "mathjs": "^4.0.1",
     "napajs": "^0.2.1",
